@@ -3,8 +3,11 @@
 #include <fstream>
 #include <iostream>
 #include <string>
+#include "Form.hpp"
 #include <bits/stdc++.h> 
 #include <iomanip>
+
+class Form;
 
 class Bureaucrat
 {
@@ -26,6 +29,7 @@ class Bureaucrat
 
 		void		incr_grade();
 		void		decr_grade();
+		void		signForm( Form& form );
 	class GradeTooLowException : public std::exception
 	{
 	public:

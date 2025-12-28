@@ -7,6 +7,7 @@ Form::Form(): _name("Default Form"), _signed(false), _minGradeToSign(150), _minG
 
 Form::Form(const std::string name, const int minGradeToSign, const int minGradeToExecute): _name(name), _signed(false), _minGradeToSign(minGradeToSign), _minGradeToExecute(minGradeToExecute)
 {
+	std::cout << "Form Constructor Called" << std::endl;
 	const int signGrade = this->getMinGradeToSign();
 	const int executeGrade = this->getMinGradeToExecute();
 	if (signGrade > 150 || executeGrade > 150)
@@ -28,9 +29,31 @@ Form::~Form()
 Form&	Form::operator=(const Form& src)
 {
 	std::cout << "Form Assignation Operator Called" << std::endl;
+	(void)src;
+	return (*this);
 }
 
-void Form::beSigned(Bureaucrat &signer)
+const std::string	Form::getName( void )const
+{
+	return (this->_name);
+}
+
+bool	Form::getSigned( void )const
+{
+	return (this->_signed);
+}
+
+int	Form::getMinGradeToExecute( void )const
+{
+	return (this->_minGradeToExecute);
+}
+
+int	Form::getMinGradeToSign( void )const
+{
+	return (this->_minGradeToSign);
+}
+
+void	Form::beSigned(Bureaucrat &signer)
 {
 	if ((int)signer.get_grade() > this->getMinGradeToSign())
 		throw(Bureaucrat::GradeTooLowException());
@@ -41,4 +64,14 @@ void Form::beSigned(Bureaucrat &signer)
 	}
 	else
 		std::cout << this->getName() << " Form is already signed" << std::endl;
+}
+
+std::ostream	&operator<<(std::ostream &o, Form *a)
+{
+	o << "Form " << a->getName() <<
+	":\n\tsign-grade:\t" << a->getMinGradeToSign() <<
+	"\n\texec-grade:\t" << a->getMinGradeToExecute() <<
+	"\n\tis signed:\t" << a->getSigned() <<
+	std::endl;
+	return (o);
 }

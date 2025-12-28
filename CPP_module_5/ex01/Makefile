@@ -4,6 +4,7 @@ CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
 NAME = Bureaucrat
 CFILES = main.cpp \
 		Bureaucrat.cpp \
+		Form.cpp
 
 OBJS = ${CFILES:.cpp=.o}
 

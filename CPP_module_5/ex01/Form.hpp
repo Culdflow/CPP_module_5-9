@@ -7,6 +7,8 @@
 #include <bits/stdc++.h> 
 #include <iomanip>
 
+class Bureaucrat;
+
 class Form
 {
 	private:
@@ -25,8 +27,8 @@ class Form
 		//getter-------------------------------------
 		const std::string	getName( void )const;
 		bool				getSigned( void )const;
-		const int			getMinGradeToSign( void )const;
-		const int			getMinGradeToExecute( void )const;
+		int					getMinGradeToSign( void )const;
+		int					getMinGradeToExecute( void )const;
 		//member functions---------------------------
 		void				beSigned(Bureaucrat &a);
 
@@ -43,4 +45,4 @@ class Form
 		};
 };
 
-std::ostream	operator<<(std::ostream &o, Form *form);
+std::ostream	&operator<<(std::ostream &o, Form *form);
