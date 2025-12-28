@@ -27,6 +27,7 @@ Bureaucrat&	Bureaucrat::operator=( const Bureaucrat& src )
 {
 	this->_name = src.get_name();
 	this->_grade = src.get_grade();
+	return (*this);
 }
 
 std::string	Bureaucrat::get_name()const
@@ -59,6 +60,15 @@ const char *Bureaucrat::GradeTooHighException::what(void) const throw()
 	return ("Grade too high");
 };
 
+void	Bureaucrat::incr_grade( void )
+{
+	this->set_grade(this->get_grade() - 1);
+}
+
+void	Bureaucrat::decr_grade( void )
+{
+	this->set_grade(this->get_grade() + 1);
+}
 
 std::ostream	&operator<<(std::ostream &o, Bureaucrat *a)
 {
