@@ -4,7 +4,7 @@ int main(void)
 {
 	Bureaucrat *harry = new Bureaucrat(150, "harry");
 
-	for (int i = 0; i < 150; i++)
+	for (int i = 0; i < 1; i++)
 	{
 		try
 		{
@@ -12,8 +12,73 @@ int main(void)
 		}
 		catch(Bureaucrat::GradeTooLowException &e)
 		{
+			std::cerr << "[ERROR]: ";
 			std::cerr << e.what() << '\n';
 		}
-		std::cout << harry << std::endl;
+		std::cout << harry;
 	}
+	delete harry;
+	Bureaucrat *gerald = new Bureaucrat(130, "gerald");
+
+	for (int i = 0; i < 21; i++)
+	{
+		try
+		{
+			gerald->decr_grade();
+		}
+		catch(Bureaucrat::GradeTooLowException &e)
+		{
+			std::cerr << "[ERROR]: ";
+			std::cerr << e.what() << '\n';
+		}
+		std::cout << gerald;
+	}
+	delete gerald;
+	Bureaucrat *alex = new Bureaucrat(50, "alex");
+
+	for (int i = 0; i < 50; i++)
+	{
+		try
+		{
+			alex->incr_grade();
+		}
+		catch(Bureaucrat::GradeTooHighException &e)
+		{
+			std::cerr << "[ERROR]: ";
+			std::cerr << e.what() << '\n';
+		}
+		std::cout << alex;
+	}
+	delete alex;
+	try
+	{
+		Bureaucrat *dominique = new Bureaucrat(0, "dominique");
+		delete dominique;
+	}
+	catch(Bureaucrat::GradeTooHighException &e)
+	{
+		std::cerr << "[ERROR]: ";
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		Bureaucrat *lilian = new Bureaucrat(151, "lilian");
+		delete lilian;
+	}
+	catch(Bureaucrat::GradeTooLowException &e)
+	{
+		std::cerr << "[ERROR]: ";
+		std::cerr << e.what() << '\n';
+	}
+	try
+	{
+		Bureaucrat *christian = new Bureaucrat(-36, "christian");
+		delete christian;
+	}
+	catch(Bureaucrat::GradeTooHighException &e)
+	{
+		std::cerr << "[ERROR]: ";
+		std::cerr << e.what() << '\n';
+	}
+	
 }

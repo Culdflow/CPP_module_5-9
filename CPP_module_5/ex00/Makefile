@@ -1,7 +1,7 @@
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
 # -fsanitize=address
-NAME = Animal
+NAME = Bureaucrat
 CFILES = main.cpp \
 		Bureaucrat.cpp \
 
