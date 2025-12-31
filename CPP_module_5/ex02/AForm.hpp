@@ -9,28 +9,33 @@
 
 class Bureaucrat;
 
-class Form
+class AForm
 {
 	private:
 		const std::string	_name;
 		bool				_signed;
 		const int			_minGradeToSign;
 		const int			_minGradeToExecute;
+		std::string			_target;
 	public:
-		Form();
-		Form(const std::string name, const int minGradeToSign, const int minGradeToExecute);
-		Form(Form& copy);
-		~Form();
+		AForm();
+		AForm(const std::string name, const int minGradeToSign, const int minGradeToExecute);
+		AForm(AForm& copy);
+		virtual ~AForm();
 
-		Form&	operator=(const Form& src);
+		AForm&	operator=(const AForm& src);
 
 		//getter-------------------------------------
 		const std::string	getName( void )const;
 		bool				getSigned( void )const;
 		int					getMinGradeToSign( void )const;
 		int					getMinGradeToExecute( void )const;
+		std::string			getTarget( void )const;
+		//setter-------------------------------------
+		void				setTarget( std::string );
 		//member functions---------------------------
 		void				beSigned(Bureaucrat &a);
+		virtual void		execute(Bureaucrat const & executor)const = 0;
 
 		class FormGradeTooLowException : public std::exception
 		{
@@ -45,4 +50,4 @@ class Form
 		};
 };
 
-std::ostream	&operator<<(std::ostream &o, Form *form);
+std::ostream	&operator<<(std::ostream &o, AForm *form);

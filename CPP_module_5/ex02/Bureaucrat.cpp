@@ -70,9 +70,24 @@ void	Bureaucrat::decr_grade( void )
 	this->set_grade(this->get_grade() + 1);
 }
 
-void	Bureaucrat::signForm( Form& form )
+void	Bureaucrat::signForm( AForm& form )
 {
 	form.beSigned(*this);
+}
+
+void	Bureaucrat::executeForm( AForm const & form )const
+{
+	try
+	{
+		form.execute(*this);
+	}
+	catch(Bureaucrat::GradeTooLowException &e)
+	{
+		std::cerr << this->get_name() << " Couldn't Execute " << form.getName() << " Because his Grade is Too Low" << std::endl;
+		std::cerr << e.what() << '\n';
+		return ;
+	}
+	std::cout << this->get_name() << " executed " << form.getName() << std::endl;
 }
 
 std::ostream	&operator<<(std::ostream &o, Bureaucrat *a)

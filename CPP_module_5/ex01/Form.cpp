@@ -11,9 +11,9 @@ Form::Form(const std::string name, const int minGradeToSign, const int minGradeT
 	const int signGrade = this->getMinGradeToSign();
 	const int executeGrade = this->getMinGradeToExecute();
 	if (signGrade > 150 || executeGrade > 150)
-		throw(Form::GradeTooLowException());
+		throw Form::FormGradeTooLowException();
 	else if( signGrade < 1 || executeGrade < 1)
-		throw(Form::GradeTooHighException());
+		throw Form::FormGradeTooHighException();
 }
 
 Form::Form(Form& copy): _name(copy.getName()), _signed(false), _minGradeToSign(copy.getMinGradeToSign()), _minGradeToExecute(copy.getMinGradeToExecute())
@@ -56,7 +56,10 @@ int	Form::getMinGradeToSign( void )const
 void	Form::beSigned(Bureaucrat &signer)
 {
 	if ((int)signer.get_grade() > this->getMinGradeToSign())
+	{
+		std::cerr << signer.get_name() << " couldn’t sign " << this->getName();
 		throw(Bureaucrat::GradeTooLowException());
+	}
 	else if (this->getSigned() == false)
 	{
 		this->_signed = true;
@@ -65,6 +68,16 @@ void	Form::beSigned(Bureaucrat &signer)
 	else
 		std::cout << this->getName() << " Form is already signed" << std::endl;
 }
+
+const char*	Form::FormGradeTooHighException::what(void) const throw()
+{
+	return ("Form grade is too high");
+};
+
+const char*	Form::FormGradeTooLowException::what(void) const throw()
+{
+	return ("Form grade is too low");
+};
 
 std::ostream	&operator<<(std::ostream &o, Form *a)
 {

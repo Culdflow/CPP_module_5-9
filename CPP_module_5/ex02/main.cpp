@@ -1,4 +1,7 @@
 #include "Bureaucrat.hpp"
+#include "ShrubberyCreationForm.hpp"
+#include "RobotomyRequestForm.hpp"
+#include "PresidentialPardonForm.hpp"
 
 int main(void)
 {
@@ -81,23 +84,25 @@ int main(void)
 		std::cerr << e.what() << '\n';
 	}
 	///////////////////////////////////////////////////////
-	Form *acceptForm = new Form("IDK", 120, 150);
-	Form *refuseForm = new Form("Refused", 100, 150);
-	Bureaucrat *jerome = new Bureaucrat(100, "Jerome");
-	Bureaucrat *kenny = new Bureaucrat(150, "Kenny");
+	// AForm *acceptForm = new AForm("IDK", 120, 150);
+	AForm *shrub = new ShrubberyCreationForm("an old man");
+	Bureaucrat *arnold = new Bureaucrat(100, "Arnold");
 
-	try
-	{
-		jerome->signForm(*acceptForm);
-		kenny->signForm(*refuseForm);
-	}
-	catch(Bureaucrat::GradeTooLowException &e)
-	{
-		std::cerr << "[ERROR]: ";
-		std::cerr << e.what() << '\n';
-	}
-	delete acceptForm;
-	delete refuseForm;
-	delete jerome;
-	delete kenny;
+	arnold->executeForm(*shrub);
+	delete shrub;
+	delete arnold;
+
+	AForm *robo = new RobotomyRequestForm("macron");
+	Bureaucrat *dobby = new Bureaucrat(30, "Dobby");
+
+	dobby->executeForm(*robo);
+	delete robo;
+	delete dobby;
+
+	AForm *pres = new PresidentialPardonForm("Luigi mangione");
+	Bureaucrat *sir = new Bureaucrat(1, "Sir");
+
+	sir->executeForm(*pres);
+	delete pres;
+	delete sir;
 }
