@@ -1,8 +1,9 @@
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
 # -fsanitize=address
-NAME = Template
+NAME = Span
 CFILES = main.cpp \
+		Span.cpp \
 
 OBJS = ${CFILES:.cpp=.o}
 

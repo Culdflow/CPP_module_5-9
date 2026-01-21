@@ -12,7 +12,7 @@ Span::Span( unsigned int N ): _N(N), _nb_el(0), _span(new int[N]), _smallestNb(0
 	std::cout << "[Span]: Max Amount Of Elements Set To " << N << std::endl;
 }
 
-Span::Span( Span& copy ): _N(copy.getN()), _nb_el(copy.getNbEl()), _smallestNb(copy.getSmallestNb()), _biggestNb(copy.getBiggestNb())
+Span::Span( const Span& copy ): _N(copy.getN()), _nb_el(copy.getNbEl()), _smallestNb(copy.getSmallestNb()), _biggestNb(copy.getBiggestNb())
 {
 	std::cout << "[Span]: Copy Constructor Called" << std::endl;
 	std::cout << "[Span]: Max Amount Of Elements Set To " << copy.getN() << std::endl;
@@ -46,18 +46,70 @@ Span&	Span::operator=( const Span& src )
 
 void	Span::addNumber( int nb )
 {
-	if (this->getNbEl() >= this->getN())
+	if ((unsigned int)this->getNbEl() >= this->getN())
 		throw SpanAlreadyFullException();
 	if (this->getNbEl() <= 0)
 	{
 		this->_biggestNb = nb;
 		this->_smallestNb = nb;
 	}
-	this->_nb_el += 1;
 	this->_span[this->_nb_el] = nb;
 	if (nb > this->getBiggestNb())
 		this->_biggestNb = nb;
 	if (nb < this->getSmallestNb())
 		this->_smallestNb = nb;
+	this->_nb_el += 1;
+	std::cout << "[Span]: Added Number " << nb << std::endl;
 }
 
+int	Span::longestSpan( void )
+{
+	return (this->getBiggestNb() - this->getSmallestNb());
+}
+
+int	Span::shortestSpan( void )
+{
+	int	result = -1;
+
+	if (this->getNbEl() < 2)
+		throw NoSpanCanBeFoundException();
+	for (int i = 0; i < this->getNbEl(); i++)
+	{
+		for (int y = 0; y < this->getNbEl(); y++)
+		{
+			if (i != y)
+			{
+				if (result == -1)
+					result = abs(this->_span[i] - this->_span[y]);
+				else if (abs(this->_span[i] - this->_span[y]) < result)
+					result = abs(this->_span[i] - this->_span[y]);
+			}
+		}
+	}
+	return (result);
+}
+
+unsigned int	Span::getN( void )const
+{
+	return (this->_N);
+}
+
+int				Span::getNbEl( void )const
+{
+	return (this->_nb_el);
+}
+
+int				Span::getBiggestNb( void )const
+{
+	return (this->_biggestNb);
+}
+
+int				Span::getSmallestNb( void )const
+{
+	return (this->_smallestNb);
+}
+
+int*			Span::getSpan( void )const
+{
+	return (this->_span);
+}
