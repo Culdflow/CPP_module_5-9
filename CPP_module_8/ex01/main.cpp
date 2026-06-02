@@ -21,5 +21,10 @@ int main()
 	s.addRange(v.begin(), v.end());
 	std::cout << s.shortestSpan() << std::endl;
 	std::cout << s.longestSpan() << std::endl;
+	Span t = Span(10000);
+	for (int i = 0; i < 10000; i++)
+		t.addNumber(i);
+	std::cout << "Shortest Span = " << t.shortestSpan() << std::endl;
+	std::cout << "Longest Span = " << t.longestSpan() << std::endl;
 	return 0;
 }
