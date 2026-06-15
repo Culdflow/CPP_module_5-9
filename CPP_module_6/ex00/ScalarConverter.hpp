@@ -30,6 +30,9 @@ class ScalarConverter
 
 		// Constructor
 		ScalarConverter();
+		ScalarConverter(const std::string input);
+		ScalarConverter(const ScalarConverter &src);
+
 		// Methods
 		int checkInput(void);
 		void convertInput(void);
@@ -51,9 +54,7 @@ class ScalarConverter
 		// Setter
 	public:
 	// Constructors
-		ScalarConverter(const std::string input);
-		ScalarConverter(const ScalarConverter &src);
-
+		static void convert(const std::string input);
 	// Deconstructors
 		~ScalarConverter();
 

@@ -237,3 +237,8 @@ double ScalarConverter::getDouble(void)const
 {
 	return (this->_double);
 }
+
+void ScalarConverter::convert(const std::string input)
+{
+	ScalarConverter a(input);
+}
