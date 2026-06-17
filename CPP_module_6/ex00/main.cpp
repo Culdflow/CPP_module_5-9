@@ -10,14 +10,6 @@ int main(int argc, char **argv)
 	try
 	{
 		ScalarConverter::convert(argv[1]);
-		// try
-		// {
-		// 	Conversion copy(conversion);
-		// }
-		// catch(const std::exception& e)
-		// {
-		// 	std::cerr << e.what() << std::endl;
-		// }
 	}
 	catch(const ScalarConverter::ErrorException& e)
 	{
