@@ -58,7 +58,7 @@ class Span
 		public:
 			virtual const char* what() const throw()
 			{
-				return ("No spam could be found");
+				return ("No span could be found");
 			}
 	};
 };

@@ -32,7 +32,9 @@ public:
 	// Overloaded opperators
 	stack &operator=(const stack &src)
 	{
-		stack::operator=(src);
+		if (*this != src)
+			*this = src;
+		return (*this);
 	}
 
 	// begin iterator
