@@ -1,6 +1,6 @@
 CC = c++
 CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
-# -fsanitize=address
+
 NAME = btc
 CFILES = main.cpp \
 		btc.cpp 

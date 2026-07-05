@@ -20,3 +20,5 @@ class	btc
 	public:
 		btc();
 };
+
+void	checkErrorsDate(std::string str);
