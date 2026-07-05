@@ -51,7 +51,7 @@ void	checkErrorsDay(int year, int month, int day)
 			max_day = 31; 
 	}
 	if (day < 1 || day > max_day)
-		throw(std::string) "[Invalid Day]: Must be between 1 and the max number of days of that month of that year";
+		throw(btc::DateDayNotValid());
 }
 
 void	checkErrorsDate(std::string str)
@@ -73,22 +73,58 @@ void	checkErrorsDate(std::string str)
 	int_day = atoi(day.c_str());
 
 	if (int_year < 2009 || int_year > 2022)
-		throw(std::string) "[Invalid Year]: Has to be between 2009 - 2025";
+		throw(btc::DateYearNotValid());
 	if (int_month < 1 || int_month > 12)
-		throw(std::string) "[Invalid Month]: Has to be between 1 - 12";
+		throw(btc::DateMonthNotValid());
 	checkErrorsDay(int_year, int_month, int_day);
 }
+
+
 
 void	btc::putLineFile(std::string str, std::ifstream& file)
 {
 	std::string	key = str.substr(0, str.find('|'));
 	std::string	value_str = str.substr(str.find('|') + 1, str.length());
 	float			value = atof(value_str.c_str());
-	this->btcData.insert(std::make_pair(key, value));
+	try
+	{
+		checkErrorsDate(key);
+	}
+	catch (btc::DateDayNotValid& e)
+	{
+		std::cout << e.what() << std::endl;
+		file.close();
+	}
+	catch (btc::DateMonthNotValid& e)
+	{
+		std::cout << e.what() << std::endl;
+		file.close();
+	}
+	catch (btc::DateDayNotValid& e)
+	{
+		std::cout << e.what() << std::endl;
+		file.close();
+	}
 	(void)file;
+	this->btcData.insert(std::make_pair(key, value));
 }
 
 btc::btc()
 {
 	fillBtcData();
+}
+
+const char*	btc::DateYearNotValid::what(void) const throw()
+{
+	return ("[Invalid Year]: Has to be between 2009 - 2025");
+}
+
+const char* btc::DateMonthNotValid::what(void) const throw()
+{
+	return ("[Invalid Month]: Has to be between 1 - 12");
+}
+
+const char* btc::DateDayNotValid::what(void) const throw()
+{
+	return ("[Invalid Day]: Must be between 1 and the max number of days of that month of that year");
 }

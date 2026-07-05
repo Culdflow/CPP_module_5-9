@@ -19,6 +19,21 @@ class	btc
 		void							fillBtcData();
 	public:
 		btc();
+	class DateYearNotValid: public std::exception
+	{
+		public:
+			virtual const char*	what() const throw();
+	};
+	class DateMonthNotValid: public std::exception
+	{
+		public:
+			virtual const char*	what() const throw();
+	};
+	class DateDayNotValid: public std::exception
+	{
+		public:
+			virtual const char*	what() const throw();
+	};
 };
 
 void	checkErrorsDate(std::string str);
