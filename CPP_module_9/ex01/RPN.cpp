@@ -19,27 +19,40 @@ bool    is_oper(char el)
 
 RPN::RPN(char* str)
 {
-    for (int i = 0; str[i]; i++)
-    {
-        if (str[i] != ' ')
-        {
-            if (is_valid_el(str[i]))
-                this->stack.push(str[i]);
-            else
-            {
-                std::cerr << "Error: Invalid element => " << str[i] << std::endl;
-                exit(-1);
-            }
-        }
-    }
-    char oper = this->stack.top();
-    if (!is_oper(oper))
-    {
-        std::cerr << "Error: Last element has to be an operator (+, -, *, /) instead is : " << oper << std::endl;
-        exit(-1);
-    }
-    this->stack.pop();
-    std::cout << this->calculate(oper) << std::endl;
+	int	nb_nb = 0;
+	int	nb_op = 0;
+	for (int i = 0; str[i]; i++)
+	{
+		if (str[i] != ' ')
+		{
+			if (is_valid_el(str[i]))
+			{
+				this->stack.push(str[i]);
+				if (is_oper(str[i]))
+					nb_op++;
+				else
+					nb_nb++;
+			}
+			else
+			{
+				std::cerr << "Error: Invalid element => " << str[i] << std::endl;
+				exit(-1);
+			}
+		}
+	}
+	char oper = this->stack.top();
+	if (!is_oper(oper))
+	{
+		std::cerr << "Error: Last element has to be an operator (+, -, *, /) instead is : " << oper << std::endl;
+		exit(-1);
+	}
+	if (nb_op >= nb_nb)
+	{
+		std::cerr << "Error: Invalid syntaxe" << std::endl;
+		exit(-1);
+	}
+	this->stack.pop();
+	std::cout << this->calculate(oper) << std::endl;
 }
 
 int RPN::calculate(char oper)
