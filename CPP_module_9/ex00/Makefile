@@ -1,5 +1,5 @@
 CC = c++
-CFLAGS = -Wall -Werror -Wextra -std=c++98 -fsanitize=address -g
+CFLAGS = -Wall -Werror -Wextra -std=c++98 #-fsanitize=address -g
 
 NAME = btc
 CFILES = main.cpp \

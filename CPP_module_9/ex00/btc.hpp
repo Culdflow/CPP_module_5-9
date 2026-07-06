@@ -11,15 +11,19 @@
 class	btc
 {
 	private:
-		std::map<std::string, float>	btcData;
-		std::map<std::string, float>	filedata;
 		void							putLineFile(std::string, std::ifstream& file);
-		void							fillFileData(char* filename);
 		void							putLineData(std::string);
 		void							fillBtcData();
 	public:
+		std::map<std::string, float>	btcData;
+		std::map<std::string, float>	filedata;
+		bool							cmpDate(std::string date1, std::string date2)const;
 		btc();
-	class DateYearNotValid: public std::exception
+		btc(const btc& src);
+		~btc();
+		void							fillFileData(char* filename);
+		void							print_btc();
+		class DateYearNotValid: public std::exception
 	{
 		public:
 			virtual const char*	what() const throw();
@@ -37,3 +41,4 @@ class	btc
 };
 
 void	checkErrorsDate(std::string str);
+std::ostream&	operator<<(std::ostream& os, const btc& BTC);
