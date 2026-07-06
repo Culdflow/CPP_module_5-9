@@ -35,11 +35,11 @@ void	btc::fillFileData(char* filename)
 	std::string line;
 	getline(file, line);
 	while (getline(file, line))
-		putLineFile(line, file);
+		putLineFile(line);
 	file.close();
 }
 
-void	checkErrorsDay(int year, int month, int day)
+bool	checkErrorsDay(int year, int month, int day)
 {
 	int max_day;
 	if (month == 2)
@@ -57,10 +57,11 @@ void	checkErrorsDay(int year, int month, int day)
 			max_day = 31; 
 	}
 	if (day < 1 || day > max_day)
-		throw(btc::DateDayNotValid());
+		return (false);
+	return (true);
 }
 
-void	checkErrorsDate(std::string str)
+bool	checkErrorsDate(std::string str)
 {
 	std::istringstream sstream(str);
 	std::string year;
@@ -79,10 +80,12 @@ void	checkErrorsDate(std::string str)
 	int_day = atoi(day.c_str());
 
 	if (int_year < 1990 || int_year > 2022)
-		throw(btc::DateYearNotValid());
+		return (false);
 	if (int_month < 1 || int_month > 12)
-		throw(btc::DateMonthNotValid());
-	checkErrorsDay(int_year, int_month, int_day);
+		return (false);
+	if (checkErrorsDay(int_year, int_month, int_day) == false)
+		return (false);
+	return (true);
 }
 
 int*	cmpDateHelper(std::string date)
@@ -119,85 +122,38 @@ bool	btc::cmpDate(std::string date1, std::string date2)const
 	return (rtrn);
 }
 
-void	btc::putLineFile(std::string str, std::ifstream& file)
+void	btc::putLineFile(std::string str)
 {
 	std::string	key = str.substr(0, str.find('|'));
 	std::string	value_str = str.substr(str.find('|') + 1, str.length());
 	float			value = atof(value_str.c_str());
-	// std::cout << key << std::endl;
-	// std::cout << value << std::endl;
-	try
+	std::map<std::string, float>::const_iterator it_data;
+	int				i = 0;
+	if (checkErrorsDate(key) == false)
 	{
-		checkErrorsDate(key);
+		std::cout << "Error: bad input => " << key << std::endl;
+		return ;
 	}
-	catch (btc::DateDayNotValid& e)
+	if (value < 0)
 	{
-		std::cout << e.what() << std::endl;
-		file.close();
+		std::cout << "Error: not a positive number." << std::endl;
+		return ;
 	}
-	catch (btc::DateMonthNotValid& e)
+	if (value > 1000)
 	{
-		std::cout << e.what() << std::endl;
-		file.close();
+		std::cout << "Error: too large a number." << std::endl;
+		return ;
 	}
-	catch (btc::DateYearNotValid& e)
+	for (it_data = this->btcData.begin(); cmpDate(it_data->first, key); it_data++)
 	{
-		std::cout << e.what() << std::endl;
-		file.close();
+		i++;
 	}
-	(void)file;
-	this->filedata.insert(std::make_pair(key, value));
+	if (i > 0)
+		it_data--;
+	std::cout << key << " => " << value << " = " << value * it_data->second << std::endl;
 }
 
 btc::~btc()
 {}
 
-const char*	btc::DateYearNotValid::what(void) const throw()
-{
-	return ("[Invalid Year]: Has to be between 2009 - 2025");
-}
 
-const char* btc::DateMonthNotValid::what(void) const throw()
-{
-	return ("[Invalid Month]: Has to be between 1 - 12");
-}
-
-const char* btc::DateDayNotValid::what(void) const throw()
-{
-	return ("[Invalid Day]: Must be between 1 and the max number of days of that month of that year");
-}
-
-void 	btc::print_btc()
-{
-	std::map<std::string, float>::const_iterator it_data;
-	std::map<std::string, float>::const_iterator it_file;
-	for(it_file = this->filedata.begin(); it_file != this->filedata.end(); it_file++)
-	{
-		int i = 0;
-		for (it_data = this->btcData.begin(); this->cmpDate(it_data->first, it_file->first); it_data++)
-		{
-			i++;
-		}
-		if (i > 0)
-			it_data--;
-		std::cout << it_file->first << " => " << it_data->second << " = " << it_file->second * it_data->second << std::endl;
-	}
-}
-
-std::ostream&	operator<<(std::ostream& os, const btc& BTC)
-{
-	std::map<std::string, float>::const_iterator it_data;
-	std::map<std::string, float>::const_iterator it_file;
-	for(it_file = BTC.filedata.begin(); it_file != BTC.filedata.end(); it_file++)
-	{
-		int i = 0;
-		for (it_data = BTC.btcData.begin(); BTC.cmpDate(it_data->first, it_file->first); it_data++)
-		{
-			i++;
-		}
-		if (i > 0)
-			it_data--;
-		std::cout << it_file->first << " => " << it_data->second << " = " << it_file->second * it_data->second << std::endl;
-	}
-	return (os);
-}
