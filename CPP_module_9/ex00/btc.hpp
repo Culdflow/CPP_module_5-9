@@ -19,6 +19,7 @@ class	btc
 		bool							cmpDate(std::string date1, std::string date2)const;
 		btc();
 		btc(const btc& src);
+		btc&	operator=(const btc& src);
 		~btc();
 		void							fillFileData(char* filename);
 };

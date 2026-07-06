@@ -5,6 +5,11 @@ btc::btc()
 	fillBtcData();
 }
 
+btc::btc(const btc& src)
+{
+	*this = src;
+}
+
 void	btc::fillBtcData()
 {
 	std::ifstream	file("data/data.csv");
@@ -151,6 +156,15 @@ void	btc::putLineFile(std::string str)
 	if (i > 0)
 		it_data--;
 	std::cout << key << " => " << value << " = " << value * it_data->second << std::endl;
+}
+
+btc&	btc::operator=(const btc& src)
+{
+	if (this != &src)
+	{
+		this->btcData = src.btcData;
+	}
+	return (*this);
 }
 
 btc::~btc()
