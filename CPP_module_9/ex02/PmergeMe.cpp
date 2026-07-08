@@ -1,4 +1,4 @@
-#include "../include/PmergeMe.hpp"
+#include "PmergeMe.hpp"
 
 PmergeMe::PmergeMe(){};
 PmergeMe::~PmergeMe(){};
@@ -11,7 +11,7 @@ PmergeMe& PmergeMe::operator=(const PmergeMe& other) {
 PmergeMe::PmergeMe(const PmergeMe& other){(void)(other);
 };
 
-/***************************************Vector sorting part***************************************/
+
 void PmergeMe::mergeInsertSortVector(std::vector<int> &container, int start, int end)
 {
     int newEnd;
@@ -79,7 +79,7 @@ void PmergeMe::runDeque(std::deque<int> &container)
     mergeInsertSortDeque(container, 0, container.size() - 1);
 };
 
-/***************************************Deque sorting part***************************************/
+
 void PmergeMe::mergeInsertSortDeque(std::deque<int> &container, int start, int end)
 {
     int newEnd;
@@ -137,7 +137,7 @@ void PmergeMe::insertSortDeque(std::deque<int> &container, int start, int end)
     }
 };
 
-/**************************************Utility functions part***************************************/
+
 void caluclateTime(std::vector<int> &Vcontainer, std::deque<int> &Dcontainer,double &vecTime, double &deqTime)
 {
     std::clock_t start = std::clock();
